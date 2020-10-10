@@ -1,7 +1,8 @@
 import Head from 'next/head';
-import { auth } from 'firebase';
+import { auth, firestore } from 'firebase';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
+import FirestoreCollections from '@/lib/firestore-collections';
 
 const Page = ({ title, children, layoutProvider }) => {
 	const router = useRouter();
@@ -9,14 +10,29 @@ const Page = ({ title, children, layoutProvider }) => {
 	const layoutedChild = layoutProvider ? layoutProvider(children) : children;
 
 	useEffect(() => {
-		auth().onAuthStateChanged(user => {
+		const unsubscribe = auth().onAuthStateChanged(user => {
 			setAuthStatusLoading(false);
 			if (user && user.uid) {
-				if (router.pathname === '/login') router.push('/');
+
+				firestore()
+				.collection(FirestoreCollections.USERS)
+				.doc(user.uid)
+				.set(
+					{
+						name: user.displayName,
+						email: user.email,
+					},
+					{ merge: true }
+				).then(() => {
+					if (router.pathname === '/login') router.push('/');
+				});
+
 			} else if (router.pathname !== '/login') {
 				router.push('/login');
 			}
 		});
+
+		return unsubscribe;
 	}, []);
 
 	return (
