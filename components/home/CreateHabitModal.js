@@ -13,15 +13,28 @@ import {
 import Select from "@/components/common/select";
 import { useState } from "react";
 
-const CreateHabitModal = ({ isOpen, onClose }) => {
+const CreateHabitModal = ({ onSubmit, isOpen, onClose }) => {
 	const [reps, _setReps] = useState(1);
 	const [type, setType] = useState('');
 	const [time, setTime] = useState('');
 	const [label, setLabel] = useState('');
 	const [frequency, setFrequency] = useState('');
+	const [submitting, setSubmitting] = useState(false);
 
 	const setReps = value => _setReps(!!value ? Number(value) : '');
 	const isValid = !!reps && type && label && frequency && time;
+
+	const setDefaults = () => {
+		const setters = [
+			setType,
+			setTime,
+			setReps,
+			setLabel,
+			setFrequency,
+			setSubmitting,
+		];
+		setters.forEach(setter => setter(''));
+	};
 
 	return (
 		<Drawer
@@ -96,6 +109,14 @@ const CreateHabitModal = ({ isOpen, onClose }) => {
 					<Button
 						isDisabled={!isValid}
 						variantColor="blue"
+						isLoading={submitting}
+						onClick={() => {
+							setSubmitting(true);
+							onSubmit({ reps, type, time, label, frequency }).then(() => {
+								setDefaults();
+								onClose();
+							});
+						}}
 					>
 						Save
 					</Button>
