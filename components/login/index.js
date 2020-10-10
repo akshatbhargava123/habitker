@@ -2,7 +2,7 @@ import { Button } from '@chakra-ui/core';
 import { auth } from 'firebase';
 import { useState } from 'react';
 
-const LoginPage = () => {
+const LoginPage = ({ authStatusLoading }) => {
 	const [loading, setLoading] = useState(false);
 
 	const login = () => {
@@ -29,7 +29,7 @@ const LoginPage = () => {
 				fontWeight="bold"
 				backgroundColor="white"
 				onClick={login}
-				isLoading={loading}
+				isLoading={loading || authStatusLoading}
 			>
 				Continue with Google
 			</Button>

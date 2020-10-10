@@ -1,12 +1,12 @@
 import Header from '@/components/common/header';
 
 const withBaseLayout = (children) => {
-	return () => (
+	return (props) => (
 		<div>
 			<Header />
 			<div className="dashboard-content fixed flex w-full">
 				<div className="w-full">
-					{children()}
+					{children(props)}
 				</div>
 			</div>
 			<style jsx>{`

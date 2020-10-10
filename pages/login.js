@@ -2,8 +2,10 @@ import LoginPage from "@/components/login";
 import Page from "@/components/common/page";
 import withBaseLayout from "@/components/common/layouts/base";
 
-export default () => (
+const Login = () => (
   <Page title="Home" layoutProvider={withBaseLayout}>
-    {() => <LoginPage />}
+    {(props) => <LoginPage {...props} />}
   </Page>
 );
+
+export default Login;

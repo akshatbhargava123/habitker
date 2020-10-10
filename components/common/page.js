@@ -1,14 +1,16 @@
-import { useRouter } from 'next/router';
 import Head from 'next/head';
 import { auth } from 'firebase';
-import { useEffect } from 'react';
+import { useRouter } from 'next/router';
+import { useEffect, useState } from 'react';
 
 const Page = ({ title, children, layoutProvider }) => {
 	const router = useRouter();
+	const [authStatusLoading, setAuthStatusLoading] = useState(true);
 	const layoutedChild = layoutProvider ? layoutProvider(children) : children;
 
 	useEffect(() => {
 		auth().onAuthStateChanged(user => {
+			setAuthStatusLoading(false);
 			if (user.uid) {
 				if (router.pathname === '/login') router.push('/');
 			} else if (router.pathname !== '/login') {
@@ -28,7 +30,7 @@ const Page = ({ title, children, layoutProvider }) => {
 				<meta charSet="utf-8" />
 			</Head>
 			<div className="w-screen select-none">
-				{layoutedChild()}
+				{layoutedChild({ authStatusLoading })}
 			</div>
 		</div>
 	);
