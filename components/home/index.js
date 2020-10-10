@@ -40,7 +40,7 @@ const HomePage = () => {
 				isOpen={addHabitModalOpen}
 				onClose={closeAddHabitModal}
 			/>
-			<div className="absolute bottom-0 right-0 m-5">
+			<div className="absolute right-0 m-5" style={{ bottom: '4vh' }}>
 				<Tooltip label="Start new Habit">
 					<IconButton
 						size="lg"

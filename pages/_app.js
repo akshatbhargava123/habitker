@@ -1,3 +1,4 @@
+import '@/lib/init-firebase';
 import { ThemeProvider, CSSReset } from '@chakra-ui/core';
 import customTheme from '../theme';
 import '../styles.css';

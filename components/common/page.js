@@ -13,7 +13,7 @@ const Page = ({ title, children, layoutProvider }) => {
 				<link rel="icon" type="image/svg" sizes="32x32" href="/favicon.svg" />
 				<meta charSet="utf-8" />
 			</Head>
-			<div className="w-screen">
+			<div className="w-screen select-none">
 				{layoutedChild()}
 			</div>
 		</div>
