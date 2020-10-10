@@ -14,7 +14,7 @@ const Header = () => {
 			<h3 className="font-bold text-xl">
 				HabitKer
 			</h3>
-			<LogOut onClick={logout} />
+			{auth().currentUser && <LogOut onClick={logout} />}
 		</div>
 	);
 };
