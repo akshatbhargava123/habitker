@@ -1,17 +1,29 @@
-import { Button } from '@chakra-ui/core';
 import { auth } from 'firebase';
 import { useState } from 'react';
+import { Button, useToast } from '@chakra-ui/core';
 
 const LoginPage = ({ authStatusLoading }) => {
+	const toast = useToast();
 	const [loading, setLoading] = useState(false);
 
 	const login = () => {
 		setLoading(true);
-		auth().signInWithPopup(new auth.GoogleAuthProvider()).then(res => {
+
+		const googleAuthProvider = new auth.GoogleAuthProvider();
+		auth().signInWithPopup(googleAuthProvider).then(res => {
 			const { user } = res;
-			console.log(user);
-		}).catch(() => {
-			alert('Something surely went wrong! :(');
+			toast({
+				title: `Welcome ${user.displayName}`,
+				status: 'success',
+				duration: 2000,
+			});
+		}).catch((error) => {
+			console.error(error)
+			toast({
+				title: 'Error, something went wrong!',
+				status: 'error',
+				duration: 2000,
+			});
 		}).finally(() => {
 			setLoading(false);
 		});
