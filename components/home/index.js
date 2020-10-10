@@ -1,15 +1,41 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { format } from "date-fns";
-import { IconButton, Tooltip, useDisclosure } from "@chakra-ui/core";
+import { CircularProgress, IconButton, Tooltip, useDisclosure } from "@chakra-ui/core";
 import HabitCard from '@/components/common/habit-card';
 import CreateHabitModal from "./CreateHabitModal";
+import { firestore } from "firebase";
+import FirestoreCollections from "@/lib/firestore-collections";
 
-const HomePage = () => {
+const HomePage = ({ user }) => {
+	const [loading, setLoading] = useState(true);
+	const [userInfo, setUserInfo] = useState();
 	const {
 		onOpen: openAddHabitModal,
 		isOpen: addHabitModalOpen,
 		onClose: closeAddHabitModal,
 	} = useDisclosure();
+
+	useEffect(() => {
+		if (user && user.uid) {
+			firestore()
+				.collection(FirestoreCollections.USERS)
+				.doc(user.uid)
+				.get()
+				.then((doc) => setUserInfo(doc.data()))
+				.finally(() => setLoading(false));
+		}
+	}, []);
+
+	if (loading) {
+		return (
+			<div className="flex flex-col items-center mt-20 justify-center">
+				<div>
+					<CircularProgress isIndeterminate color="red" size="2rem" />
+				</div>
+				<p>👻 Eating bits, just a sec...</p>
+			</div>
+		);
+	}
 
 	return (
 		<div className="px-4 py-2">
