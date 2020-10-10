@@ -5,7 +5,7 @@ const withBaseLayout = (children) => {
 		<div>
 			<Header />
 			<div className="dashboard-content fixed flex w-full">
-				<div className="">
+				<div className="w-full">
 					{children()}
 				</div>
 			</div>
