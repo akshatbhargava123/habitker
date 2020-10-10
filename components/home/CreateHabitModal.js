@@ -11,8 +11,18 @@ import {
 } from "@chakra-ui/core";
 
 import Select from "@/components/common/select";
+import { useState } from "react";
 
 const CreateHabitModal = ({ isOpen, onClose }) => {
+	const [reps, _setReps] = useState(1);
+	const [type, setType] = useState('');
+	const [time, setTime] = useState('');
+	const [label, setLabel] = useState('');
+	const [frequency, setFrequency] = useState('');
+
+	const setReps = value => _setReps(!!value ? Number(value) : '');
+	const isValid = !!reps && type && label && frequency && time;
+
 	return (
 		<Drawer
 			isOpen={isOpen}
@@ -25,42 +35,70 @@ const CreateHabitModal = ({ isOpen, onClose }) => {
 				<DrawerHeader>✨ Start new Habit</DrawerHeader>
 
 				<DrawerBody>
-					<Input placeholder="What do you want to achieve?" my="1rem" />
+					<label className="text-gray-500 w-3/5 font-semibold">
+						What do you want to achieve?
+					</label>
+					<Input
+						my="1rem"
+						value={label}
+						onChange={(ev) => setLabel(ev.target.value)}
+						placeholder="Ex: Physical Workout"
+					/>
 
 					<Select
+						defaultValue={frequency}
+						onChange={value => setFrequency(value)}
 						className="my-4"
-						placeholder="Habit Type"
 						options={[
 							{ label: 'Daily', value: 'daily' },
 							{ label: 'Weekly', value: 'weekly' },
 						]}
 					/>
+
 					<Select
+						defaultValue={type}
+						onChange={value => setType(value)}
 						className="my-4"
-						placeholder="Habit Type"
 						options={[
 							{ label: 'Time based', value: 'time' },
 							{ label: 'Reps based', value: 'reps' },
 						]}
 					/>
 
-					<Input placeholder="How many Reps / Count?" my="1rem" />
+					<label className="text-gray-500 w-3/5 font-semibold">
+						How many Reps?
+					</label>
+					<Input
+						my="1rem"
+						value={reps}
+						type="number"
+						placeholder="Enter the count (Ex: 5)"
+						onChange={ev => setReps(ev.target.value)}
+					/>
 
-					<div className="flex items-center">
-						<span className="text-gray-500 w-3/5 font-semibold">Start Time:</span>
-						<Input type="time" placeholder="Start Time" my="1rem" />
-					</div>
-					<div className="flex items-center">
-						<span className="text-gray-500 w-3/5 font-semibold">End Time:</span>
-						<Input type="time" placeholder="End Time" my="1rem" />
-					</div>
+					<label className="text-gray-500 w-3/5 font-semibold">
+						When in the day?
+					</label>
+					<Input
+						my="1rem"
+						type="time"
+						value={time}
+						placeholder="Start Time"
+						onChange={ev => setTime(ev.target.value)}
+					/>
+
 				</DrawerBody>
 
 				<DrawerFooter>
 					<Button variant="outline" mr={3} onClick={onClose}>
 						Cancel
 					</Button>
-					<Button color="blue">Save</Button>
+					<Button
+						isDisabled={!isValid}
+						variantColor="blue"
+					>
+						Save
+					</Button>
 				</DrawerFooter>
 			</DrawerContent>
 		</Drawer>

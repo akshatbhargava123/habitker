@@ -26,9 +26,9 @@ const Select = ({
     <RadioButtonGroup
 			isInline={inline}
       onChange={onChange}
+      className={className}
       placeholder={placeholder}
       defaultValue={defaultValue}
-      className={className}
     >
       {options.map((option, key) => (
 				<CustomRadio
