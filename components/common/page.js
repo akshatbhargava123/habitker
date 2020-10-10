@@ -13,7 +13,9 @@ const Page = ({ title, children, layoutProvider }) => {
 				<link rel="icon" type="image/svg" sizes="32x32" href="/favicon.svg" />
 				<meta charSet="utf-8" />
 			</Head>
-			{layoutedChild()}
+			<div>
+				{layoutedChild()}
+			</div>
 		</div>
 	);
 };
