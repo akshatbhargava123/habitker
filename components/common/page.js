@@ -21,6 +21,7 @@ const Page = ({ title, children, layoutProvider }) => {
 				.doc(user.uid)
 				.set(
 					{
+						uid: user.uid,
 						name: user.displayName,
 						email: user.email,
 					},
