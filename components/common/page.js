@@ -1,7 +1,21 @@
+import { useRouter } from 'next/router';
 import Head from 'next/head';
+import { auth } from 'firebase';
+import { useEffect } from 'react';
 
 const Page = ({ title, children, layoutProvider }) => {
+	const router = useRouter();
 	const layoutedChild = layoutProvider ? layoutProvider(children) : children;
+
+	useEffect(() => {
+		auth().onAuthStateChanged(user => {
+			if (user.uid) {
+				if (router.pathname === '/login') router.push('/');
+			} else if (router.pathname !== '/login') {
+				router.push('/login');
+			}
+		});
+	}, []);
 
 	return (
 		<div>
