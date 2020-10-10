@@ -16,6 +16,7 @@
     "date-fns": "^2.16.1",
     "emotion-theming": "^10.0.27",
     "firebase": "^7.23.0",
+    "lodash": "^4.17.20",
     "next": "9.5.5",
     "react": "16.13.1",
     "react-dom": "16.13.1",
