@@ -11,7 +11,7 @@ const Page = ({ title, children, layoutProvider }) => {
 	useEffect(() => {
 		auth().onAuthStateChanged(user => {
 			setAuthStatusLoading(false);
-			if (user.uid) {
+			if (user && user.uid) {
 				if (router.pathname === '/login') router.push('/');
 			} else if (router.pathname !== '/login') {
 				router.push('/login');

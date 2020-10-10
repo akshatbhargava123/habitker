@@ -4,6 +4,6 @@ import HomePage from "@/components/home";
 
 export default () => (
   <Page title="Home" layoutProvider={withBaseLayout}>
-    {() => <HomePage />}
+    {(props) => <HomePage {...props} />}
   </Page>
 );
