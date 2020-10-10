@@ -28,3 +28,24 @@ You can check out [the Next.js GitHub repository](https://github.com/zeit/next.j
 The easiest way to deploy your Next.js app is to use the [ZEIT Now Platform](https://zeit.co/import?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+
+
+# Habit Tracker
+
+- Add a habit:
+	- Label for the habit
+	- Daily / Weekly
+	- Time bounded or NOT
+		- If yes, Time Range (Ex: 10:00 AM - 10:15 AM)
+		- If no, Reps / Count
+
+- Dashboard:
+	- Show all habit tasks for today
+		- allow quick modification button (decrease reps and cross-off items)
+	- If everything is done, voila!
+	- Add new Habit button as FabButton
+
+- View all current habits
+
+
+
