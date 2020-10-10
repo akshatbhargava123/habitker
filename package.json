@@ -5,12 +5,16 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "git:commit": "git-cz"
   },
   "dependencies": {
     "next": "9.5.5",
     "react": "16.13.1",
     "react-dom": "16.13.1",
     "tailwindcss": "^1.8.13"
+  },
+  "devDependencies": {
+    "git-cz": "^4.7.1"
   }
 }
