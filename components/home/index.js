@@ -1,8 +1,8 @@
-import { format } from "date-fns";
-import HabitCard from '@/components/common/habit-card';
-import { IconButton, Tooltip, useDisclosure } from "@chakra-ui/core";
-import CreateHabitModal from "./CreateHabitModal";
 import { useEffect } from "react";
+import { format } from "date-fns";
+import { IconButton, Tooltip, useDisclosure } from "@chakra-ui/core";
+import HabitCard from '@/components/common/habit-card';
+import CreateHabitModal from "./CreateHabitModal";
 
 const HomePage = () => {
 	const {
