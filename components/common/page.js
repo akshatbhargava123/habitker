@@ -6,6 +6,7 @@ import FirestoreCollections from '@/lib/firestore-collections';
 
 const Page = ({ title, children, layoutProvider }) => {
 	const router = useRouter();
+	const [user, setUser] = useState();
 	const [authStatusLoading, setAuthStatusLoading] = useState(true);
 	const layoutedChild = layoutProvider ? layoutProvider(children) : children;
 
@@ -13,6 +14,7 @@ const Page = ({ title, children, layoutProvider }) => {
 		const unsubscribe = auth().onAuthStateChanged(user => {
 			setAuthStatusLoading(false);
 			if (user && user.uid) {
+				setUser(user);
 
 				firestore()
 				.collection(FirestoreCollections.USERS)
@@ -46,7 +48,7 @@ const Page = ({ title, children, layoutProvider }) => {
 				<meta charSet="utf-8" />
 			</Head>
 			<div className="w-screen select-none">
-				{layoutedChild({ authStatusLoading })}
+				{layoutedChild({ user, authStatusLoading })}
 			</div>
 		</div>
 	);
