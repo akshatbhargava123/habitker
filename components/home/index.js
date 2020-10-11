@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { format, parse } from "date-fns";
-import { CircularProgress, IconButton, Tooltip, useDisclosure, useToast } from "@chakra-ui/core";
+import { Button, CircularProgress, IconButton, Tooltip, useDisclosure, useToast } from "@chakra-ui/core";
 import HabitCard from '@/components/common/habit-card';
 import CreateHabitModal from "./CreateHabitModal";
 import { firestore } from "firebase";
@@ -72,22 +72,38 @@ const HomePage = ({ user }) => {
 
 	return (
 		<div className="px-4 py-2">
-			<h1 className="font-bold text-gray-600 text-lg my-3">
-				Today · {format(new Date(), 'E dd LLL')}
-			</h1>
-			<div className="habits-scroll-area overflow-y-scroll mb-20">
-				{habits.map((habit, i) => (
-					<HabitCard
-						key={i}
-						type={habit.type}
-						label={habit.label}
-						totalReps={habit.reps}
-						currentReps={habit.curReps || 0}
-						time={parse(habit.time, 'HH:mm', new Date())}
-						isOverdue
-					/>
-				))}
-			</div>
+			{!!habits.length && (
+				<div>
+					<h1 className="font-bold text-gray-600 text-lg my-3">
+						Today · {format(new Date(), 'E dd LLL')}
+					</h1>
+					<div className="habits-scroll-area overflow-y-scroll mb-20">
+						{habits.map((habit, i) => (
+							<HabitCard
+								key={i}
+								type={habit.type}
+								label={habit.label}
+								totalReps={habit.reps}
+								currentReps={habit.curReps || 0}
+								time={parse(habit.time, 'HH:mm', new Date())}
+								isOverdue
+							/>
+						))}
+					</div>
+				</div>
+			)}
+			{!habits.length && (
+				<div className="mt-10 flex flex-col items-center justify-between">
+					<img src="/images/home.svg" />
+					<h4 className="font-bold mt-5 mb-2">Welcome {userInfo.name}</h4>
+					<p className="font-thin mb-5 text-lg">
+						Let's take the first step to reach that goal!
+					</p>
+					<Button variantColor="red" onClick={openAddHabitModal}>
+						Start new Habit
+					</Button>
+				</div>
+			)}
 
 			<CreateHabitModal
 				onSubmit={createHabit}
