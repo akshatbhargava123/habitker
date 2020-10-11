@@ -1,5 +1,6 @@
 import { IconButton } from "@chakra-ui/core";
 import { differenceInMinutes, format } from "date-fns";
+import { useState } from "react";
 
 const HabitCard = ({
 	type,
@@ -10,6 +11,7 @@ const HabitCard = ({
 	completed,
 	onComplete,
 }) => {
+	const [stepping, setStepping] = useState(false);
 	const isOverdue = differenceInMinutes(new Date(), time) <= 0;
 
 	return (
@@ -44,7 +46,13 @@ const HabitCard = ({
 						size="sm"
 						aria-label="Proceed to next step"
 						icon="check"
-						onClick={onComplete}
+						isLoading={stepping}
+						onClick={() => {
+							setStepping(true);
+							onComplete().then(() => {
+								setStepping(false);
+							});
+						}}
 					/>
 				</div>
 			)}

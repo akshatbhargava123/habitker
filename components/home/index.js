@@ -39,7 +39,6 @@ const HomePage = ({ user }) => {
 
 	const initHabits = () => {
 		// get user habits
-		setLoading(true);
 		return habitService.current.get().then(({ habits, habitStatus }) => {
 			// sorting by complete-ness
 			const sortedHabits = habits.sort((h1, h2) => {
@@ -76,7 +75,9 @@ const HomePage = ({ user }) => {
 	};
 
 	const onComplete = (habitData) => {
-		return habitService.current.step(habitData.id, habitData);
+		return habitService.current
+			.step(habitData.id, habitData)
+			.then(initHabits);
 	};
 
 	if (loading) {
