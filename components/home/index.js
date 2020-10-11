@@ -6,12 +6,13 @@ import CreateHabitModal from "./CreateHabitModal";
 import { firestore } from "firebase";
 import FirestoreCollections from "@/lib/firestore-collections";
 import HabitService from "@/lib/services/habit";
-import { random } from 'lodash';
+import { get, random } from 'lodash';
 
 const HomePage = ({ user }) => {
 	const toast = useToast();
 	const habitService = useRef();
 	const [habits, setHabits] = useState([]);
+	const [habitStatus, setHabitStatus] = useState({});
 	const [loading, setLoading] = useState(true);
 	const [userInfo, setUserInfo] = useState();
 	const {
@@ -39,9 +40,18 @@ const HomePage = ({ user }) => {
 	const initHabits = () => {
 		// get user habits
 		setLoading(true);
-		return habitService.current.get().then(habits => {
-			setHabits(habits);
-			setLoading(false)
+		return habitService.current.get().then(({ habits, habitStatus }) => {
+			// sorting by complete-ness
+			const sortedHabits = habits.sort((h1, h2) => {
+				const s1 = get(habitStatus, `${h2.id}.completed`, 0);
+				const s2 = get(habitStatus, `${h1.id}.completed`, 0);
+				return s2 - s1;
+			});
+
+			setHabits(sortedHabits);
+			setHabitStatus(habitStatus);
+
+			setLoading(false);
 		});
 	};
 
@@ -88,14 +98,15 @@ const HomePage = ({ user }) => {
 						Today · {format(new Date(), 'E dd LLL')}
 					</h1>
 					<div className="habits-scroll-area overflow-y-scroll mb-20">
-						{habits.map((habit, i) => (
+						{habits.map(habit => (
 							<HabitCard
-								key={i}
+								key={habit.id}
 								type={habit.type}
 								label={habit.label}
 								totalReps={habit.reps}
-								currentReps={habit.curReps || 0}
 								time={parse(habit.time, 'HH:mm', new Date())}
+								currentReps={get(habitStatus, `${habit.id}.curReps`, 0)}
+								completed={get(habitStatus, `${habit.id}.completed`, false)}
 								onComplete={() => onComplete(habit)}
 							/>
 						))}
