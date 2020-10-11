@@ -32,13 +32,18 @@ const HomePage = ({ user }) => {
 				.then((doc) => { setUserInfo(doc.data()) })
 				.finally(() => {}/*setLoading(false)*/);
 
-			// get user habits
-			habitService.current.get().then(habits => {
-				setHabits(habits);
-				setLoading(false)
-			});
+				initHabits();
 		}
 	}, [user]);
+
+	const initHabits = () => {
+		// get user habits
+		setLoading(true);
+		return habitService.current.get().then(habits => {
+			setHabits(habits);
+			setLoading(false)
+		});
+	};
 
 	const createHabit = (habitData) => {
 		const successMessages = [
@@ -54,6 +59,7 @@ const HomePage = ({ user }) => {
 				duration: 2000,
 				position: 'top'
 			});
+			initHabits();
 		}).catch(() => {
 			alert('Something went wrong!');
 		});
