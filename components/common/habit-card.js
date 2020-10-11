@@ -7,6 +7,7 @@ const HabitCard = ({
 	totalReps,
 	currentReps,
 	time,
+	completed,
 	onComplete,
 }) => {
 	const isOverdue = differenceInMinutes(new Date(), time) <= 0;
@@ -33,14 +34,36 @@ const HabitCard = ({
 					</span>
 				)}
 			</div>
-			<div className="w-auto">
-				<IconButton
-					size="sm"
-					aria-label="Proceed to next step"
-					icon="check"
-					onClick={onComplete}
-				/>
-			</div>
+			{completed ? (
+				<div className="w-auto">
+					<p className="text-2xl ping">🎉</p>
+				</div>
+			) : (
+				<div className="w-auto">
+					<IconButton
+						size="sm"
+						aria-label="Proceed to next step"
+						icon="check"
+						onClick={onComplete}
+					/>
+				</div>
+			)}
+			<style jsx>{`
+				.ping {
+					animation: ping 1.5s cubic-bezier(0, 0, 0.2, 1) 1;
+				}
+
+				@keyframes ping {
+					0% {
+						transform: scale(1);
+						opacity: 0;
+					}
+					75%, 100% {
+						transform: scale(1.25);
+						opacity: 1;
+					}
+				}
+			`}</style>
 		</div>
 	);
 };
