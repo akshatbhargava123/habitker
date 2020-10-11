@@ -1,5 +1,5 @@
-import { Checkbox, IconButton, Progress } from "@chakra-ui/core";
-import { format } from "date-fns";
+import { IconButton } from "@chakra-ui/core";
+import { differenceInMinutes, format } from "date-fns";
 
 const HabitCard = ({
 	type,
@@ -7,8 +7,9 @@ const HabitCard = ({
 	totalReps,
 	currentReps,
 	time,
-	isOverdue = false,
 }) => {
+	const isOverdue = differenceInMinutes(new Date(), time) <= 0;
+
 	return (
 		<div className="flex items-center justify-between border-b px-2 py-2">
 			<div className="w-4/5">
@@ -25,9 +26,11 @@ const HabitCard = ({
 						{format(new Date(time), 'kk:mm')}
 					</span>
 				)}
-				<span className="bg-red-500 py-px px-1 rounded text-xs text-white text-sm ml-2" hidden={!isOverdue}>
-					Overdue
-				</span>
+				{type === 'time' && isOverdue && (
+					<span className="bg-red-500 py-px px-1 rounded text-xs text-white text-sm ml-2" hidden={!isOverdue}>
+						Overdue
+					</span>
+				)}
 			</div>
 			<div className="w-auto">
 				<IconButton size="sm" aria-label="Search database" icon="check" />

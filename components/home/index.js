@@ -92,7 +92,6 @@ const HomePage = ({ user }) => {
 								totalReps={habit.reps}
 								currentReps={habit.curReps || 0}
 								time={parse(habit.time, 'HH:mm', new Date())}
-								isOverdue
 							/>
 						))}
 					</div>
