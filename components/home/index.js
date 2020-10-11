@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { format } from "date-fns";
+import { format, parse } from "date-fns";
 import { CircularProgress, IconButton, Tooltip, useDisclosure, useToast } from "@chakra-ui/core";
 import HabitCard from '@/components/common/habit-card';
 import CreateHabitModal from "./CreateHabitModal";
@@ -11,6 +11,7 @@ import { random } from 'lodash';
 const HomePage = ({ user }) => {
 	const toast = useToast();
 	const habitService = useRef();
+	const [habits, setHabits] = useState([]);
 	const [loading, setLoading] = useState(true);
 	const [userInfo, setUserInfo] = useState();
 	const {
@@ -29,11 +30,12 @@ const HomePage = ({ user }) => {
 				.doc(user.uid)
 				.get()
 				.then((doc) => { setUserInfo(doc.data()) })
-				.finally(() => setLoading(false));
+				.finally(() => {}/*setLoading(false)*/);
 
 			// get user habits
 			habitService.current.get().then(habits => {
-				console.log(habits);
+				setHabits(habits);
+				setLoading(false)
 			});
 		}
 	}, [user]);
@@ -73,22 +75,16 @@ const HomePage = ({ user }) => {
 			<h1 className="font-bold text-gray-600 text-lg my-3">
 				Today · {format(new Date(), 'E dd LLL')}
 			</h1>
-			<div className="overflow-y-scroll">
-				<HabitCard
-					time={new Date()}
-					label="School Homework"
-					type="reps"
-					currentReps={1}
-					totalReps={4}
-					isOverdue
-				/>
-				{new Array(5).fill(0).map((item, i) => (
+			<div className="habits-scroll-area overflow-y-scroll mb-20">
+				{habits.map((habit, i) => (
 					<HabitCard
 						key={i}
-						label="School Homework"
-						type="time"
-						currentReps={1}
-						totalReps={4}
+						type={habit.type}
+						label={habit.label}
+						totalReps={habit.reps}
+						currentReps={habit.curReps || 0}
+						time={parse(habit.time, 'HH:mm', new Date())}
+						isOverdue
 					/>
 				))}
 			</div>
@@ -109,6 +105,11 @@ const HomePage = ({ user }) => {
 					/>
 				</Tooltip>
 			</div>
+			<style jsx>{`
+				.habits-scroll-area {
+					height: calc(100vh - 18rem);
+				}
+			`}</style>
 		</div>
 	);
 };

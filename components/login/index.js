@@ -21,6 +21,7 @@ const LoginPage = ({ authStatusLoading }) => {
 			console.error(error)
 			toast({
 				title: 'Error, something went wrong!',
+				description: JSON.stringify(error),
 				status: 'error',
 				duration: 2000,
 			});
