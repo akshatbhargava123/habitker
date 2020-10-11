@@ -22,6 +22,7 @@ const HomePage = ({ user }) => {
 	useEffect(() => {
 		if (user && user.uid) {
 			habitService.current = new HabitService(user.uid);
+
 			// init user basic data
 			firestore()
 				.collection(FirestoreCollections.USERS)
@@ -29,6 +30,11 @@ const HomePage = ({ user }) => {
 				.get()
 				.then((doc) => { setUserInfo(doc.data()) })
 				.finally(() => setLoading(false));
+
+			// get user habits
+			habitService.current.get().then(habits => {
+				console.log(habits);
+			});
 		}
 	}, [user]);
 
