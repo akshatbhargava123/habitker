@@ -7,6 +7,7 @@ const HabitCard = ({
 	totalReps,
 	currentReps,
 	time,
+	onComplete,
 }) => {
 	const isOverdue = differenceInMinutes(new Date(), time) <= 0;
 
@@ -33,7 +34,12 @@ const HabitCard = ({
 				)}
 			</div>
 			<div className="w-auto">
-				<IconButton size="sm" aria-label="Search database" icon="check" />
+				<IconButton
+					size="sm"
+					aria-label="Proceed to next step"
+					icon="check"
+					onClick={onComplete}
+				/>
 			</div>
 		</div>
 	);

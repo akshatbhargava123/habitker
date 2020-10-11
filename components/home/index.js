@@ -65,6 +65,10 @@ const HomePage = ({ user }) => {
 		});
 	};
 
+	const onComplete = (habitData) => {
+		return habitService.current.step(habitData.id, habitData);
+	};
+
 	if (loading) {
 		return (
 			<div className="flex flex-col items-center mt-20 justify-center">
@@ -92,6 +96,7 @@ const HomePage = ({ user }) => {
 								totalReps={habit.reps}
 								currentReps={habit.curReps || 0}
 								time={parse(habit.time, 'HH:mm', new Date())}
+								onComplete={() => onComplete(habit)}
 							/>
 						))}
 					</div>
