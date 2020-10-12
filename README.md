@@ -6,7 +6,7 @@ Remember the app was built keeping mobile-first in mind and not yet ready for de
 
 > This app was build as an interview task for [animall.in] but I plan to develop it further when I've some more bandwidth in the future.
 
-Live URL: 🙏🙏🙏 Open on mobile 🙏🙏🙏 [https://habitker.web.app/]
+Live URL: 🙏 Open with mobile mode if on desktop 🙏 [https://habitker.web.app/]
 
 ## Brainstorming arena:
 
@@ -59,12 +59,12 @@ Architected the whole application from scratch and at every point I tried to kee
 
 ## Running the application
 
-First, run the development server:
+- Create a Firebase instance of the application on your console and enable Google auth and Cloud Firestore
 
-```bash
-npm run dev
-# or
-yarn dev
-```
+- Clone the repo and install the dependencies `npm install` or `yarn`
 
-Open [http://localhost:3000](http://localhost:3000) in your browser to see the result.
+- Add `.env.local` file with `NEXT_PUBLIC_FIREBASE_CONFIG` variable being set to stringified version of your firebase web config.
+
+- Run the dev server: `npm run dev` or `yarn run dev`
+
+- Open [http://localhost:3000](http://localhost:3000) in your browser to see the result.
