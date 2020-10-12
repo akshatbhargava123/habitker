@@ -4,11 +4,9 @@ Building new Habits: The way it always should have been.
 
 Remember the app was built keeping mobile-first in mind and not yet ready for desktop sizes so please open with mobile mode ON (Mac: Cmd + Shift + M)
 
-<details>
- <summary>Little Note</summary>
- This app was build as an interview task for [animall.in] but I plan to develop it further when I've some more bandwidth in the future.
-</details>
-<br />
+> This app was build as an interview task for [animall.in] but I plan to develop it further when I've some more bandwidth in the future.
+
+Live URL: 🙏🙏🙏 Open on mobile 🙏🙏🙏 [https://habitker.web.app/]
 
 ## Brainstorming arena:
 
@@ -69,4 +67,4 @@ npm run dev
 yarn dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) in your browser to see the result.
